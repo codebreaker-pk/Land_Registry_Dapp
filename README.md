@@ -52,7 +52,7 @@ Land Registry DApp is a blockchain-based application that allows users to regist
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/Land_Registry_Dapp.git
+git clone https://github.com/codebreaker-pk/Land_Registry_Dapp.git
 cd Land_Registry_Dapp
 ```
 
