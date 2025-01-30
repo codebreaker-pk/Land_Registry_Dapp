@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Registry DApp</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-map-marked-alt"></i> Land Registry DApp
+                </a>
+                <div class="d-flex align-items-center">
+                    <div id="networkStatus" class="me-3 text-white">
+                        <i class="fas fa-network-wired"></i> Network
+                    </div>
+                    <button id="connectWallet" class="btn btn-light">
+                        <i class="fas fa-wallet"></i> Connect Wallet
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard -->
+        <div class="row mt-4">
+            <!-- Land Registration Section -->
+            <div class="col-md-4">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-header bg-gradient">
+                        <h2 class="text-white text-center">
+                            <i class="fas fa-plus-circle"></i> Register Land
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="landRegistrationForm">
+                            <div class="mb-3">
+                                <label class="form-label">Land Location</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
+                                    <input 
+                                        type="text" 
+                                        id="location" 
+                                        class="form-control" 
+                                        placeholder="Enter Land Location" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Land Area (sq meters)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-ruler"></i></span>
+                                    <input 
+                                        type="number" 
+                                        id="area" 
+                                        class="form-control" 
+                                        placeholder="Enter Land Area" 
+                                        required
+                                        min="1"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-primary btn-lg"
+                                >
+                                    <i class="fas fa-save"></i> Register Land
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Land Actions -->
+                <div class="card shadow-lg">
+                    <div class="card-header bg-gradient">
+                        <h3 class="text-white text-center">
+                            <i class="fas fa-tools"></i> Land Management
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button id="listLandForSale" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#listLandModal">
+                                <i class="fas fa-tag"></i> List Land for Sale
+                            </button>
+                            <button id="transferLand" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#transferLandModal">
+                                <i class="fas fa-exchange-alt"></i> Transfer Land
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lands List Section -->
+            <div class="col-md-8">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-header bg-gradient">
+                        <h2 class="text-white text-center">
+                            <i class="fas fa-list"></i> My Registered Lands
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Land ID</th>
+                                        <th>Location</th>
+                                        <th>Area</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="landsTableBody">
+                                    <!-- Dynamically populated lands -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Land Marketplace -->
+                <div class="card shadow-lg">
+                    <div class="card-header bg-gradient">
+                        <h2 class="text-white text-center">
+                            <i class="fas fa-globe"></i> Land Marketplace
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Land ID</th>
+                                        <th>Location</th>
+                                        <th>Area</th>
+                                        <th>Price (ETH)</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="marketplaceTableBody">
+                                    <!-- Dynamically populated marketplace lands -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <!-- List Land for Sale Modal -->
+        <div class="modal fade" id="listLandModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient">
+                        <h5 class="modal-title text-white">List Land for Sale</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="listLandForm">
+                            <div class="mb-3">
+                                <label class="form-label">Select Land</label>
+                                <select id="landToList" class="form-select" required>
+                                    <!-- Dynamically populated -->
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Sale Price (ETH)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Ξ</span>
+                                    <input 
+                                        type="number" 
+                                        id="salePrice" 
+                                        class="form-control" 
+                                        placeholder="Enter Sale Price" 
+                                        step="0.01"
+                                        min="0"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-tag"></i> List Land
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transfer Land Modal -->
+        <div class="modal fade" id="transferLandModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient">
+                        <h5 class="modal-title text-white">Transfer Land</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="transferLandForm">
+                            <div class="mb-3">
+                                <label class="form-label">Select Land</label>
+                                <select id="landToTransfer" class="form-select" required>
+                                    <!-- Dynamically populated -->
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Recipient Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-wallet"></i></span>
+                                    <input 
+                                        type="text" 
+                                        id="recipientAddress" 
+                                        class="form-control" 
+                                        placeholder="Enter Recipient Ethereum Address" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-exchange-alt"></i> Transfer Land
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.4/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Application Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
