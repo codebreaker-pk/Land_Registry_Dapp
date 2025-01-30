@@ -80,7 +80,7 @@ npx http-server
 ## 📷 Screenshots
 Here is a preview of the Land Registry DApp interface:
 
--[Homepage](test/10.png)
+-[Homepage](test/9.png)
 ![Registration Form](test/1.png)
 ![Land Records](test/4.png)
 ![Ownership Verification](test/6.png)
