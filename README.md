@@ -89,7 +89,7 @@ Here is a preview of the Land Registry DApp interface:
 Feel free to contribute by submitting issues or pull requests!
 
 ## 📜 License
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📞 Contact
 For any queries, contact: 
